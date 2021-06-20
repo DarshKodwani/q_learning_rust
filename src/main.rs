@@ -1,8 +1,7 @@
 fn main() {
     use std::collections::HashMap;
-    
-    let mut location_to_state: HashMap<String, i32> = HashMap::new();
-    
+    use ndarray::arr2;
+
     let states = [
         0,
         1,
@@ -48,6 +47,7 @@ fn main() {
         "L",
     ];
 
+    let mut location_to_state: HashMap<String, i32> = HashMap::new();
     for location_state in locations.iter().zip(states.iter()) {
         let (location, state) = location_state;
         location_to_state.insert(
@@ -55,6 +55,30 @@ fn main() {
             *state,
         );
     }
+
+    let mut state_to_location: HashMap<i32, String> = HashMap::new();
+    for location_state in locations.iter().zip(states.iter()) {
+        let (location, state) = location_state;
+        state_to_location.insert(
+            *state,
+            location.to_string(),
+        );
+    }
+
+    let reward = arr2(&[
+        [0,1,0,0,0,0,0,0,0,0,0,0],
+        [1,0,1,0,0,1,0,0,0,0,0,0],
+        [0,1,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,0,0,1,0,0,0,0],
+        [0,0,0,0,0,0,0,0,1,0,0,0],
+        [0,1,0,0,0,0,0,0,0,1,0,0],
+        [0,0,1,0,0,0,0,1,0,0,0,0],
+        [0,0,0,1,0,0,1,0,0,0,0,1],
+        [0,0,0,0,1,0,0,0,0,1,0,0],
+        [0,0,0,0,0,1,0,0,1,0,1,0],
+        [0,0,0,0,0,0,0,0,0,1,0,1],
+        [0,0,0,0,0,0,0,1,0,0,1,0]
+        ]);
 
 }
 
